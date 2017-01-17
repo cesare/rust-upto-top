@@ -7,4 +7,8 @@ authors = ["SAWADA Tadashi <cesare@mayverse.jp>"]
 name = "upto_top"
 path = "src/main.rs"
 
+[[bin]]
+name = "list_tops"
+path = "src/list_tops.rs"
+
 [dependencies]
