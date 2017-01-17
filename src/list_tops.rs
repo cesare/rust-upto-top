@@ -15,7 +15,7 @@ fn list_directories(maybe_path: Option<PathBuf>) -> Vec<PathBuf> {
                 paths.push(PathBuf::from(&path));
             }
 
-            let ancestors = list_directories(path.parent().map(|path| PathBuf::from(&path)));
+            let ancestors = traverse(&path);
             paths.extend_from_slice(&ancestors);
             paths
         }
@@ -23,9 +23,14 @@ fn list_directories(maybe_path: Option<PathBuf>) -> Vec<PathBuf> {
     }
 }
 
+fn traverse(target_path: &PathBuf) -> Vec<PathBuf> {
+    let parent = target_path.parent().map(|path| PathBuf::from(path));
+    list_directories(parent)
+}
+
 fn main() {
     let dir = current_dir().unwrap();
-    let paths = list_directories(dir.parent().map(|path| PathBuf::from(path)));
+    let paths = traverse(&dir);
     for path in paths {
         println!("{}", path.display());
     }
